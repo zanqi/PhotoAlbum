@@ -2,11 +2,21 @@
 
 var AlbumStore = require('./AlbumStore').AlbumStore;
 
+function get_with_nonexist_id_test() {
+   // Arrange
+    const albumStore = new AlbumStore();
+
+    // Act
+    const photo = albumStore.get(15);
+
+    // Assert
+    console.assert(photo === undefined);
+}
+
 function testAdd() {
     // Arrange
     const albumStore = new AlbumStore();
     const input = {
-        id: "15",
         desciption: "Family Photo",
         url: 'www.example.com'
     };
@@ -23,7 +33,6 @@ function testRemove() {
     // Arrange
     const albumStore = new AlbumStore();
     const input = {
-        id: "15",
         desciption: "Family Photo",
         url: 'www.example.com'
     };
@@ -36,16 +45,25 @@ function testRemove() {
     console.assert(albumStore.get(input.id) === undefined);
 }
 
+function remove_with_nonexist_id_test() {
+   // Arrange
+    const albumStore = new AlbumStore();
+
+    // Act
+    albumStore.remove(15);
+
+    // Assert
+    // assert no exception
+}
+
 function testFind() {
     // Arrange
     const albumStore = new AlbumStore();
     const input = {
-        id: "15",
         desciption: "Family Photo",
         url: 'www.example.com'
     };
     const input2 = {
-        id: "16",
         desciption: "Vacation Photo",
         url: 'www.example2.com'
     };
@@ -65,7 +83,6 @@ function testEdit() {
     // Arrange
     const albumStore = new AlbumStore();
     const input = {
-        id: "15",
         desciption: "Family Photo",
         url: 'www.example.com'
     };
@@ -73,7 +90,7 @@ function testEdit() {
 
     // Act
     const edited = {
-        id: "15",
+        id: input.id,
         desciption: "Edited Photo",
         url: 'Edited Url'
     }
@@ -88,4 +105,5 @@ testAdd();
 testRemove();
 testFind();
 testEdit();
+get_with_nonexist_id_test();
 console.log("Pass");

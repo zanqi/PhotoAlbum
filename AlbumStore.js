@@ -2,10 +2,13 @@
 
 function AlbumStore() {
     this.photos = {};
+    this.currentId = 1;
 }
 
 AlbumStore.prototype.add = function (photo) {
-    this.photos[photo.id] = photo;
+    this.photos[this.currentId] = photo;
+    photo.id = this.currentId;
+    this.currentId++;
 }
 
 AlbumStore.prototype.get = function (id) {
