@@ -20,11 +20,10 @@ AlbumStore.prototype.remove = function (id) {
 }
 
 AlbumStore.prototype.find = function (term) {
-    const self = this;
-    const result = [];    
-    Object.keys(self.photos).forEach(function(key) {
-        const val = self.photos[key];
-        if (val.desciption.includes(term)) {
+    const result = [];
+    Object.keys(this.photos).forEach((key) => {
+        const val = this.photos[key];
+        if (val.desciption !== undefined && val.desciption.includes(term)) {
             result.push(val);
         }
     });
@@ -32,9 +31,14 @@ AlbumStore.prototype.find = function (term) {
 }
 
 AlbumStore.prototype.edit = function (photo) {
-    const self = this;
-    self.photos[photo.id] = photo;
+    if (photo === undefined || photo.id === undefined || photo.url === undefined) {
+        return false;
+    }
+    if (!(photo.id in this.photos)) {
+        return false;
+    }
+    this.photos[photo.id] = photo;
+    return true;
 }
-
 
 module.exports.AlbumStore = AlbumStore;

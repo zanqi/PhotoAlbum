@@ -2,7 +2,7 @@
 
 var AlbumStore = require('./AlbumStore').AlbumStore;
 
-function get_with_nonexist_id_test() {
+function getWithNonexistentIdTest() {
    // Arrange
     const albumStore = new AlbumStore();
 
@@ -101,9 +101,66 @@ function testEdit() {
     console.assert(albumStore.get(input.id).desciption === edited.desciption);
 }
 
+function editWithUndefinedInputTest() {
+    // Arrange
+    const albumStore = new AlbumStore();
+
+    // Act
+    const edited = albumStore.edit(undefined);
+
+    // Assert
+    console.assert(edited === false);
+}
+
+function editWithUndefinedIdTest() {
+    // Arrange
+    const albumStore = new AlbumStore();
+
+    // Act
+    const edited = albumStore.edit({
+        id: undefined,
+        url: 'www.example.com'
+    });
+
+    // Assert
+    console.assert(edited === false);
+}
+
+function editWithNonexistentIdTest() {
+    // Arrange
+    const albumStore = new AlbumStore();
+
+    // Act
+    const edited = albumStore.edit({
+        id: 1,
+        url: 'www.example.com'
+    });
+
+    // Assert
+    console.assert(edited === false);
+}
+
+function editWithUndefinedUrlTest() {
+    // Arrange
+    const albumStore = new AlbumStore();
+
+    // Act
+    const edited = albumStore.edit({
+        id: 1,
+        url: undefined
+    });
+
+    // Assert
+    console.assert(edited === false);
+}
+
 testAdd();
 testRemove();
 testFind();
 testEdit();
-get_with_nonexist_id_test();
+getWithNonexistentIdTest();
+editWithUndefinedInputTest();
+editWithUndefinedIdTest();
+editWithNonexistentIdTest();
+editWithUndefinedUrlTest();
 console.log("Pass");
